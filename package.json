@@ -1,0 +1,13 @@
+{
+  "name": "advent-of-code-2021",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/grug/advent-of-code-2021",
+  "author": "Dave Cooper <dave.cooper@elephant.healthcare>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.11.11",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  }
+}

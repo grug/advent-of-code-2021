@@ -1,55 +1,19 @@
 const fs = require("fs");
 
-const input = fs.readFileSync("day-03/input.txt", "utf8").split("\n");
+const input = fs
+  .readFileSync("day-03/test.txt", "utf8")
+  .split("\n")
+  .reduce((acc, curr) => [...acc, curr.split("").map(Number)], []);
 
-let breakdown = {
-  "0": { "0": 0, "1": 0 },
-  "1": { "0": 0, "1": 0 },
-  "2": { "0": 0, "1": 0 },
-  "3": { "0": 0, "1": 0 },
-  "4": { "0": 0, "1": 0 },
-  "5": { "0": 0, "1": 0 },
-  "6": { "0": 0, "1": 0 },
-  "7": { "0": 0, "1": 0 },
-  "8": { "0": 0, "1": 0 },
-  "9": { "0": 0, "1": 0 },
-  "10": { "0": 0, "1": 0 },
-  "11": { "0": 0, "1": 0 },
-};
+const transpose = (matrix: number[][]) =>
+  matrix[0].map((_, i) => matrix.map((row) => row[i]));
 
-input.forEach((item) => {
-  const digits = item.split("");
+const processed = transpose(input).map((row) =>
+  row.filter((num) => num === 1).length > input.length / 2 ? 1 : 0
+);
 
-  digits.forEach((digit, index) => {
-    breakdown[index] = {
-      ...breakdown[index],
-      [digit]: breakdown[index][digit] + 1,
-    };
-  });
-});
-
-let processed = "";
-
-Object.keys(breakdown).forEach((key) => {
-  if (breakdown[key]["0"] > breakdown[key]["1"]) {
-    processed += "0";
-  } else {
-    processed += "1";
-  }
-});
-
-const gamma = parseInt(processed, 2);
-
-processed = "";
-Object.keys(breakdown).forEach((key) => {
-  if (breakdown[key]["0"] > breakdown[key]["1"]) {
-    processed += "1";
-  } else {
-    processed += "0";
-  }
-});
-
-const epsilon = parseInt(processed, 2);
+const gamma = parseInt(processed.join(""), 2);
+const epsilon = parseInt(processed.map((i) => (i === 1 ? 0 : 1)).join(""), 2);
 
 console.log(gamma * epsilon);
 

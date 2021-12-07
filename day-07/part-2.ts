@@ -5,25 +5,18 @@ const input = fs
   .split(",")
   .map(Number);
 
-const min = Math.min(...input);
 const max = Math.max(...input);
 
-const movesPerColumn: number[] = [];
-const loops = max - min;
+const leastFuel = (fuelSpent: (distance: number) => number) =>
+  Array.from({ length: max }, (_, i) => i)
+    .map((option) =>
+      input
+        .map((pos) => Math.abs(pos - option))
+        .map(fuelSpent)
+        .reduce((sum, x) => sum + x, 0)
+    )
+    .reduce((best, x) => Math.min(x, best));
 
-for (let i = 0; i < loops; i++) {
-  let moves = 0;
-  input.forEach((value) => {
-    let currentDistance = Math.abs(value - i);
-
-    const newMoves = (currentDistance * (currentDistance + 1)) / 2;
-
-    moves += newMoves;
-  });
-
-  movesPerColumn.push(moves);
-}
-
-console.log(Math.min(...movesPerColumn));
+console.log(leastFuel((x) => (x * (x + 1)) / 2));
 
 export {};

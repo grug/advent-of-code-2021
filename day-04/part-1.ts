@@ -30,10 +30,13 @@ const solve = (boards, endgame) => {
   let winners = [];
   for (let i = 0; i < draws.length; i++) {
     boards = play(boards, draws[i]);
-    if (boards.find(win)) winners = winners.concat(boards.filter(win));
+    if (boards.find(win)) {
+      winners = winners.concat(boards.filter(win));
+    }
     boards = boards.filter((b) => !win(b));
-    console.log(draws[i], boards.length, winners.length);
-    if (winners.length == endgame) return score(winners.pop(), draws[i]);
+    if (winners.length == endgame) {
+      return score(winners.pop(), draws[i]);
+    }
   }
 };
 
